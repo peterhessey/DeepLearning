@@ -16,3 +16,46 @@ Deep Learning Coursework for software, systems and applications 3rd year module
   - [ ] Diagram of model, dicussions on its design **(40 marks)**
   - [ ] Include best output **(40 marks)** 
   - [ ] Include batch of 64 images **(20 marks)**
+
+## Notes
+### Lecture 3 Catchup 
+- Variety of potential architectures explained in lecture 3
+  - GANs look promising
+- Batch normalisation explained [here](https://deeplizard.com/learn/video/dXB-KQYkzNU)
+
+### Lecture 4 Catchup
+- Generative models are effectively the reverse of classifcation models, i.e. *P(X|Y=y)* instead of *P(Y|X=x)*
+- KDE explained nicely [here](https://mathisonian.github.io/kde/)
+- Lots of useful statisitcal definitions, may be worth coming back to when reading papers in the future
+- Dicsussion of loss functions
+  - Generally a good idea to simply use L_2 as it is convenient, simple and computationally inexpensive
+- GANs (Generative adversarial networks) use a game-theoretic approach to the generative problem, by competing two models against one another:
+  - Discriminator, D, which estimates the probability of a given sample coming from the real dataset or being a generated sample
+  - A generator, G, that learns to map noise drawn from some prior distribution (often Gaussian) to generated examples that capture p_data
+  - This creates a two-player minimax game, where one player is trying to minimize G and the other is trying to maximise D. When they reach a Nash equilibrium this is when the GAN model converges.
+
+
+### Lecture 5 Catchup - GANs and ACAIs
+- GANs are notoriously difficult to train, they often demonstrate extreme instability
+- ACAIs have a strong potential of being very useful, more detailed explanation on them can be found [here](https://www.kdnuggets.com/2019/03/interpolation-autoencoders-adversarial-regularizer.html)
+
+
+## ACAIs
+- ACAI paper [here](https://arxiv.org/pdf/1807.07543.pdf)
+- ACAI paper notes [here](https://www.kdnuggets.com/2019/03/interpolation-autoencoders-adversarial-regularizer.html)
+- ACAI implementation in tensorflow can be found [here](https://github.com/brain-research/acai)
+
+## GANs
+### DCGANs
+- Paper on Deep Convolutional Generative Adversarial Networks [here](https://arxiv.org/pdf/1511.06434.pdf)
+- Architecture guidelines:
+  - Replace pooling layers with strided convolutions (discriminator) and fractional-strided convolutions (generator)
+  - Use batch normalisation in both the generator and discriminator
+  - Remove fully connected hidden layers for deeper architectures
+  - Use ReLU activation in the generator for all layers except for the output, which uses Tanh
+  - Use LeakyReLU activation in the discriminator
+  
+### WGANs 
+- WGAN paper found [here](https://arxiv.org/pdf/1701.07875.pdf)
+- 
+  
