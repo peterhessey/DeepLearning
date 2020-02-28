@@ -122,7 +122,7 @@ optimiser_G = torch.optim.Adam(G.parameters(), lr=0.001)
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.001)
 bce_loss = nn.BCELoss()
 epoch = 0
-liveplot = PlotLosses()
+#liveplot = PlotLosses()
 
 """**Main training loop**"""
 
@@ -162,11 +162,11 @@ while (epoch<25):
     plt.grid(False)
     plt.imshow(torchvision.utils.make_grid(g).cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
 
-    liveplot.update({
-        'generator loss': gen_loss_arr.mean(),
-        'discriminator loss': dis_loss_arr.mean()
-    })
-    liveplot.draw()
+    # liveplot.update({
+    #     'generator loss': gen_loss_arr.mean(),
+    #     'discriminator loss': dis_loss_arr.mean()
+    # })
+    # liveplot.draw()
     sleep(1.)
 
     epoch = epoch+1
