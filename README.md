@@ -6,10 +6,10 @@ Deep Learning Coursework for software, systems and applications 3rd year module
 - An intentionally ill-defined learning problem; the generative model needs to use what it learns about birds and horses in order to produce the pegasus image
 
 ## To-Do
-- [ ] Lecture catchup (especially lecture 4)
-- [ ] Research generative architectures, produce list of papers / interesting articles etc.
+- [x] Lecture catchup (especially lecture 4)
+- [x] Research generative architectures, produce list of papers / interesting articles etc.
 - [ ] Select a generative model to use
-- [ ] Train data on model
+- [ ] Build and train model
 - [ ] Generate pegasus image
 - [ ] Tweak and refine hyperparameters etc., keep track of results and details of improvements
 - [ ] Write report
