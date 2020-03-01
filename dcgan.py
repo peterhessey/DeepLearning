@@ -97,6 +97,9 @@ test_set = PegasusDataset('data', train=False, download=True, transform=torchvis
 train_loader = torch.utils.data.DataLoader(train_set, shuffle=True, batch_size=16, drop_last=True)
 test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=16, drop_last=True)
 
+train_iterator = iter(cycle(train_loader))
+test_iterator = iter(cycle(test_loader))
+
 '''Used to view example data in dataset'''
 # plt.figure(figsize=(10,10))
 # for i in range(25):
