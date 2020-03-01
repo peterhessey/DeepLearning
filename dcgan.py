@@ -125,8 +125,8 @@ for _ in range(25):
     gen_loss_arr = np.zeros(0)
     dis_loss_arr = np.zeros(0)
 
-    # iterate over some of the train dateset
-    for i in range(1000):
+    # iterate over the training dataset
+    for i in range(len(train_set) // 16):
         x,t = next(train_iterator)
         x,t = x.to(device), t.to(device)
 
