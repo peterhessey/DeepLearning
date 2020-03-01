@@ -120,7 +120,7 @@ optimiser_D = torch.optim.Adam(D.parameters(), lr=0.001)
 bce_loss = nn.BCELoss()
 
 
-# training loop
+# # training loop
 for _ in range(25):
     
     # arrays for metrics
@@ -152,13 +152,10 @@ for _ in range(25):
         gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
 
-for i in range(25):
-    plt.subplot(5,5,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
-    plt.imshow(torchvision.utils.make_grid(g).cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
-    plt.xlabel(class_names[test_loader.dataset[i][1]])
 
-plt.savefig('dcgan_1.png')
+        plt.imshow(torchvision.utils.make_grid(g).cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
+
+plt.xticks([])
+plt.yticks([])
+plt.grid(False)
+plt.savefig('./output/dcgan_2.png')
