@@ -21,47 +21,21 @@ import matplotlib.pyplot as plt
 from time import sleep
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-
-"""**Import dataset**"""
-
-# helper function to make getting another batch of data easier
-def cycle(iterable):
-    while True:
-        for x in iterable:
-            yield x
-
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-train_loader = torch.utils.data.DataLoader(
-    torchvision.datasets.CIFAR10('data', train=True, download=True, transform=torchvision.transforms.Compose([
-        torchvision.transforms.ToTensor()
-    ])),
-shuffle=True, batch_size=16, drop_last=True)
+class PegasusDataset(torchvision.datasets.CIFAR10):
+    def __init__(self, root, train=True, transform=None, target_transform=None,
+                 download=False):
+        super().__init__(root, train, transform, target_transform, download)
 
-test_loader = torch.utils.data.DataLoader(
-    torchvision.datasets.CIFAR10('data', train=False, download=True, transform=torchvision.transforms.Compose([
-        torchvision.transforms.ToTensor()
-    ])),
-shuffle=False, batch_size=16, drop_last=True)
+        valid_classes = [2,7] # index of birds and horses
 
-train_iterator = iter(cycle(train_loader))
-test_iterator = iter(cycle(test_loader))
+        bird_and_horse_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
+        bird_and_horse_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
-print(f'> Size of training dataset {len(train_loader.dataset)}')
-print(f'> Size of test dataset {len(test_loader.dataset)}')
+        self.data = bird_and_horse_data
+        self.targets = bird_and_horse_targets
 
-"""**View some of the test dataset**"""
-
-plt.figure(figsize=(10,10))
-for i in range(25):
-    plt.subplot(5,5,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(test_loader.dataset[i][0].permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
-    plt.xlabel(class_names[test_loader.dataset[i][1]])
-
-"""**Define two models: (1) Generator, and (2) Discriminator**"""
 
 # define the model
 class Generator(nn.Module):
@@ -84,6 +58,7 @@ class Generator(nn.Module):
             nn.Sigmoid()
         )
 
+
 class Discriminator(nn.Module):
     def __init__(self, f=64):
         super(Discriminator, self).__init__()
@@ -102,23 +77,48 @@ class Discriminator(nn.Module):
             nn.Conv2d(f*8, 1, 4, 2, 1, bias=False),
             nn.Sigmoid()
         )
-        
+
+# helper function to make getting another batch of data easier
+def cycle(iterable):
+    while True:
+        for x in iterable:
+            yield x
+
+
+
+train_set = PegasusDataset('data', train=True, download=True, transform=torchvision.transforms.Compose([
+        torchvision.transforms.ToTensor()
+    ]))
+
+test_set = PegasusDataset('data', train=False, download=True, transform=torchvision.transforms.Compose([
+        torchvision.transforms.ToTensor()
+    ]))
+
+train_loader = torch.utils.data.DataLoader(train_set, shuffle=True, batch_size=16, drop_last=True)
+test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=16, drop_last=True)
+
+'''Used to view example data in dataset'''
+# plt.figure(figsize=(10,10))
+# for i in range(25):
+#     plt.subplot(5,5,i+1)
+#     plt.xticks([])
+#     plt.yticks([])
+#     plt.grid(False)
+#     plt.imshow(test_loader.dataset[i][0].permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
+#     plt.xlabel(class_names[test_loader.dataset[i][1]])
+
+
 G = Generator().to(device)
 D = Discriminator().to(device)
-
-print(f'> Number of generator parameters {len(torch.nn.utils.parameters_to_vector(G.parameters()))}')
-print(f'> Number of discriminator parameters {len(torch.nn.utils.parameters_to_vector(D.parameters()))}')
 
 # initialise the optimiser
 optimiser_G = torch.optim.Adam(G.parameters(), lr=0.001)
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.001)
 bce_loss = nn.BCELoss()
-epoch = 0
 
-"""**Main training loop**"""
 
 # training loop
-while (epoch<25):
+for _ in range(25):
     
     # arrays for metrics
     logs = {}
@@ -149,10 +149,13 @@ while (epoch<25):
         gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
 
-    # plot some examples
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.xticks([])
+    plt.yticks([])
     plt.grid(False)
+    g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
     plt.imshow(torchvision.utils.make_grid(g).cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
+    plt.xlabel(class_names[test_loader.dataset[i][1]])
 
-    sleep(1.)
-
-    epoch = epoch+1
+plt.savefig('dcgan_1.png')
