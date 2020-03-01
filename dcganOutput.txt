@@ -1,0 +1,6 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(dcgan.py:31882): Gdk-CRITICAL **: 15:56:27.848: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+Files already downloaded and verified
+Files already downloaded and verified
