@@ -25,7 +25,7 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 16
 NUM_EPOCHS = 25
-DG_RATIO = 5
+DG_RATIO = 1
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
