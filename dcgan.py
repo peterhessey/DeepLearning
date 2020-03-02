@@ -183,8 +183,8 @@ for epoch in range(NUM_EPOCHS):
             dg_count = 0
             
 
-    gen_loss_per_epoch.append(gen_loss_arr[len(gen_loss_arr)])
-    dis_loss_per_epoch.append(dis_loss_arr[len(dis_loss_arr)])
+    gen_loss_per_epoch.append(gen_loss_arr[len(gen_loss_arr) - 1])
+    dis_loss_per_epoch.append(dis_loss_arr[len(dis_loss_arr) - 1])
 
     print('Training epoch %d complete' % epoch)
 
