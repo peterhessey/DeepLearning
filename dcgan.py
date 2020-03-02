@@ -23,7 +23,7 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 NUM_EPOCHS = 25
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -31,7 +31,7 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
                  download=False):
         super().__init__(root, train, transform, target_transform, download)
 
-        bird_label = 0
+        bird_label = 2
         horse_label = 7
 
         valid_classes = [bird_label, horse_label] # index of birds and horses
@@ -127,6 +127,8 @@ test_iterator = iter(cycle(test_loader))
 G = Generator().to(device)
 D = Discriminator().to(device)
 
+DG_ratio = 5
+
 # initialise the optimiser
 optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002, betas=(0.5,0.99))
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002, betas=(0.5,0.99))
@@ -141,10 +143,13 @@ for epoch in range(NUM_EPOCHS):
     gen_loss_arr = np.zeros(0)
     dis_loss_arr = np.zeros(0)
 
+    dg_count = 0
+
     # iterate over the training dataset
-    for i in range(len(train_set) // 16):
+    for i in range(len(train_set) // BATCH_SIZE - 1):
         x,t = next(train_iterator)
         x,t = x.to(device), t.to(device)
+
 
         # train discriminator 
         optimiser_D.zero_grad()
@@ -154,16 +159,27 @@ for epoch in range(NUM_EPOCHS):
         loss_d = (l_r + l_f)/2.0
         loss_d.backward()
         optimiser_D.step()
-        
-        # train generator
-        optimiser_G.zero_grad()
-        g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
-        loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
-        loss_g.backward()
-        optimiser_G.step()
 
-        gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
+
+        #used for dg_ratio
+        dg_count += 1
+        
+        #if trained discriminator enough
+        if dg_count == DG_ratio:
+            # train generator
+            optimiser_G.zero_grad()
+            g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
+            loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
+            loss_g.backward()
+            optimiser_G.step()
+
+
+            for _ in range(DG_ratio):
+                gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
+
+            dg_count = 0
+            
 
     print('Training epoch %d complete' % epoch)
 
@@ -172,23 +188,42 @@ x,t = x.to(device), t.to(device)
 g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 plt.figure(figsize=(10,10))
-for i in range(BATCH_SIZE):
-    plt.subplot(8,8,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.grid(False)
-    plt.imshow(g[i].cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
 
-plt.savefig('./output/dcgan_plane_pegasus.png')
+if BATCH_SIZE >= 64:
+    for i in range(64):
+        plt.subplot(8,8,i+1)
+        plt.xticks([])
+        plt.yticks([])
+        plt.grid(False)
+        plt.imshow(g[i].cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
+
+else:
+    num_images_displayed = 0
+    batch_num = 0
+    while num_images_displayed < 64:
+        plt.subplot(8,8,i+1)
+        plt.xticks([])
+        plt.yticks([])
+        plt.grid(False)
+        plt.imshow(g[batch_num].cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
+
+        num_images_displayed += 1
+        batch_num += 1
+
+        if batch_num >= BATCH_SIZE:
+            g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
+
+
+plt.savefig('./output/dcgan_pegasus.png')
 
 plt.cla()
 plt.clf()
 
-x_axis = np.arange(len(gen_loss_arr))
+x_axis = 
 
-plt.plot(x_axis, gen_loss_arr, color='green', label='Generator loss')
-plt.plot(x_axis, dis_loss_arr, color='red', label='Discriminator loss')
+plt.plot(np.arange(len(gen_loss_arr)), gen_loss_arr, color='green', label='Generator loss')
+plt.plot(np.arange(len(dis_loss_arr)), dis_loss_arr, color='red', label='Discriminator loss')
 plt.ylabel('Loss')
-plt.xlabel('Epoch')
+plt.xlabel('Training iteration')
 plt.legend(loc=2)
 plt.savefig('./output/dcgan_plane_loss.png')
