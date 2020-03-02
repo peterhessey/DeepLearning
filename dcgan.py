@@ -24,6 +24,7 @@ device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cp
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
 BATCH_SIZE = 32
+NUM_EPOCHS = 25
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
     def __init__(self, root, train=True, transform=None, target_transform=None,
@@ -130,7 +131,7 @@ bce_loss = nn.BCELoss()
 
 
 # # training loop
-for _ in range(25):
+for epoch in range(NUM_EPOCHS):
     
     # arrays for metrics
     logs = {}
@@ -161,9 +162,7 @@ for _ in range(25):
         gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
 
-
-        plt.imshow(torchvision.utils.make_grid(g).cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
-
+    print('Training epoch %d complete')
 
 x,t = next(train_iterator)
 x,t = x.to(device), t.to(device)
@@ -177,4 +176,16 @@ for i in range(64):
     plt.grid(False)
     plt.imshow(g[i].cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
 
-plt.savefig('./output/dcgan_2.png')
+plt.savefig('./output/dcgan_pegasus2.png')
+
+plt.cla()
+plt.clf()
+
+x_axis = np.arange(NUM_EPOCHS)
+
+plt.plot(x_axis, gen_loss_arr, color='green', label='Generator loss')
+plt.plot(x_axis, dis_loss_arr, color='red', label='Discriminator loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(loc=2)
+plt.savefig('./output/dcgan_loss.png')
