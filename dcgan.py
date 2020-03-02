@@ -128,8 +128,8 @@ G = Generator().to(device)
 D = Discriminator().to(device)
 
 # initialise the optimiser
-optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002)
-optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002)
+optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002, betas=(0.5,0.99))
+optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002, betas=(0.5,0.99))
 bce_loss = nn.BCELoss()
 
 
