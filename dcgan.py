@@ -23,7 +23,7 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-BATCH_SIZE = 16
+BATCH_SIZE = 64
 NUM_EPOCHS = 25
 DG_RATIO = 1
 
@@ -93,13 +93,6 @@ class Discriminator(nn.Module):
             nn.Sigmoid()
         )
 
-# helper function to make getting another batch of data easier
-def cycle(iterable):
-    while True:
-        for x in iterable:
-            yield x
-
-
 
 train_set = PegasusDataset('data', train=True, download=True, transform=torchvision.transforms.Compose([
         torchvision.transforms.ToTensor()
@@ -112,8 +105,6 @@ test_set = PegasusDataset('data', train=False, download=True, transform=torchvis
 train_loader = torch.utils.data.DataLoader(train_set, shuffle=True, batch_size=BATCH_SIZE, drop_last=True)
 test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=BATCH_SIZE, drop_last=True)
 
-train_iterator = iter(cycle(train_loader))
-test_iterator = iter(cycle(test_loader))
 
 '''Used to view example data in dataset'''
 # plt.figure(figsize=(10,10))
@@ -148,15 +139,14 @@ for epoch in range(NUM_EPOCHS):
     dg_count = 0
 
     # iterate over the training dataset
-    for i in range(len(train_set) // BATCH_SIZE - 1):
-        x,t = next(train_iterator)
-        x,t = x.to(device), t.to(device)
+    for batch, targets in train_loader:
 
+        batch, targets = batch.to(device), targets.to(device)
 
         # train discriminator 
         optimiser_D.zero_grad()
-        g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
-        l_r = bce_loss(D.discriminate(x).mean(), torch.ones(1)[0].to(device)) # real -> 1
+        g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
+        l_r = bce_loss(D.discriminate(batch).mean(), torch.ones(1)[0].to(device)) # real -> 1
         l_f = bce_loss(D.discriminate(g.detach()).mean(), torch.zeros(1)[0].to(device)) #  fake -> 0
         loss_d = (l_r + l_f)/2.0
         loss_d.backward()
@@ -171,7 +161,7 @@ for epoch in range(NUM_EPOCHS):
         if dg_count == DG_RATIO:
             # train generator
             optimiser_G.zero_grad()
-            g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
+            g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
             loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
             loss_g.backward()
             optimiser_G.step()
@@ -190,9 +180,8 @@ for epoch in range(NUM_EPOCHS):
 
 
 # display pegasus attempts
-x,t = next(train_iterator)
-x,t = x.to(device), t.to(device)
-g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
+
+g = G.generate(torch.randn(BATCH_SIZE, 100, 1, 1).to(device))
 
 plt.figure(figsize=(10,10))
 
