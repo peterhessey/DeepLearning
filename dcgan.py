@@ -181,7 +181,7 @@ plt.savefig('./output/dcgan_pegasus2.png')
 plt.cla()
 plt.clf()
 
-x_axis = np.arange(NUM_EPOCHS)
+x_axis = np.arange(len(gen_loss_arr))
 
 plt.plot(x_axis, gen_loss_arr, color='green', label='Generator loss')
 plt.plot(x_axis, dis_loss_arr, color='red', label='Discriminator loss')
