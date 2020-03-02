@@ -31,17 +31,20 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
                  download=False):
         super().__init__(root, train, transform, target_transform, download)
 
-        valid_classes = [2,7] # index of birds and horses
+        bird_label = 2
+        horse_label = 7
+
+        valid_classes = [bird_label, horse_label] # index of birds and horses
 
         bird_and_horse_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
         bird_and_horse_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
         #switch the labels around
         for i in range(len(bird_and_horse_targets)):
-            if bird_and_horse_targets[i] == 2:
-                bird_and_horse_targets[i] = 7
+            if bird_and_horse_targets[i] == bird_label:
+                bird_and_horse_targets[i] = horse_label
             else:
-                bird_and_horse_targets[i] = 2
+                bird_and_horse_targets[i] = bird_label
 
         self.data = bird_and_horse_data
         self.targets = bird_and_horse_targets
@@ -65,7 +68,7 @@ class Generator(nn.Module):
             nn.BatchNorm2d(f),
             nn.ReLU(True),
             nn.ConvTranspose2d(f, 3, 4, 2, 1, bias=False),
-            nn.Sigmoid()
+            nn.Tanh()
         )
 
 
@@ -125,8 +128,8 @@ G = Generator().to(device)
 D = Discriminator().to(device)
 
 # initialise the optimiser
-optimiser_G = torch.optim.Adam(G.parameters(), lr=0.001)
-optimiser_D = torch.optim.Adam(D.parameters(), lr=0.001)
+optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002)
+optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002)
 bce_loss = nn.BCELoss()
 
 

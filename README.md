@@ -46,6 +46,11 @@ Deep Learning Coursework for software, systems and applications 3rd year module
 - ACAI implementation in tensorflow can be found [here](https://github.com/brain-research/acai)
 
 ## GANs
+
+### Training tips
+- [How to train a GAN Facebook AI](https://www.youtube.com/watch?time_continue=8&v=X1mUN6dD8uE&feature=emb_logo)
+- [GAN architectures for beginners](https://sigmoidal.io/beginners-review-of-gan-architectures/)
+  
 ### DCGANs
 - Paper on Deep Convolutional Generative Adversarial Networks [here](https://arxiv.org/pdf/1511.06434.pdf)
 - Architecture guidelines:
@@ -54,6 +59,9 @@ Deep Learning Coursework for software, systems and applications 3rd year module
   - Remove fully connected hidden layers for deeper architectures
   - Use ReLU activation in the generator for all layers except for the output, which uses Tanh
   - Use LeakyReLU activation in the discriminator
+
+### Conditional GANs
+- Paper on conditional GANs can be found [here](https://arxiv.org/pdf/1411.1784.pdf)
 
 ### Normalisation techniques
 - Spectral normalisation increases training stability, paper on it [here](https://arxiv.org/pdf/1802.05957.pdf)
