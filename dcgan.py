@@ -219,8 +219,6 @@ plt.savefig('./output/dcgan_pegasus.png')
 plt.cla()
 plt.clf()
 
-x_axis = 
-
 plt.plot(np.arange(len(gen_loss_arr)), gen_loss_arr, color='green', label='Generator loss')
 plt.plot(np.arange(len(dis_loss_arr)), dis_loss_arr, color='red', label='Discriminator loss')
 plt.ylabel('Loss')
