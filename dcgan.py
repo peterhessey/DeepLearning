@@ -38,9 +38,9 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         #switch the labels around
         for i in range(len(bird_and_horse_targets)):
             if bird_and_horse_targets[i] == 2:
-                bird_and_horse_targets = 7
+                bird_and_horse_targets[i] = 7
             else:
-                bird_and_horse_targets = 2
+                bird_and_horse_targets[i] = 2
 
         self.data = bird_and_horse_data
         self.targets = bird_and_horse_targets
