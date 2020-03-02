@@ -23,6 +23,8 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
+BATCH_SIZE = 32
+
 class PegasusDataset(torchvision.datasets.CIFAR10):
     def __init__(self, root, train=True, transform=None, target_transform=None,
                  download=False):
@@ -32,6 +34,13 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
 
         bird_and_horse_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
         bird_and_horse_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
+
+        #switch the labels around
+        for i in range(len(bird_and_horse_targets)):
+            if bird_and_horse_targets[i] == 2:
+                bird_and_horse_targets = 7
+            else:
+                bird_and_horse_targets = 2
 
         self.data = bird_and_horse_data
         self.targets = bird_and_horse_targets
@@ -94,8 +103,8 @@ test_set = PegasusDataset('data', train=False, download=True, transform=torchvis
         torchvision.transforms.ToTensor()
     ]))
 
-train_loader = torch.utils.data.DataLoader(train_set, shuffle=True, batch_size=16, drop_last=True)
-test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=16, drop_last=True)
+train_loader = torch.utils.data.DataLoader(train_set, shuffle=True, batch_size=BATCH_SIZE, drop_last=True)
+test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=BATCH_SIZE, drop_last=True)
 
 train_iterator = iter(cycle(train_loader))
 test_iterator = iter(cycle(test_loader))
@@ -155,7 +164,17 @@ for _ in range(25):
 
         plt.imshow(torchvision.utils.make_grid(g).cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
 
-plt.xticks([])
-plt.yticks([])
-plt.grid(False)
+
+x,t = next(train_iterator)
+x,t = x.to(device), t.to(device)
+g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
+
+plt.figure(figsize=(10,10))
+for i in range(64):
+    plt.subplot(8,8,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(g[i].cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
+
 plt.savefig('./output/dcgan_2.png')
