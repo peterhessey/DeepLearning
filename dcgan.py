@@ -215,7 +215,7 @@ else:
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 
-plt.savefig('./output/dcgan_pegasus.png')
+plt.savefig('./output/dcgan_NewPegasus.png')
 
 plt.cla()
 plt.clf()
@@ -225,4 +225,4 @@ plt.plot(np.arange(len(dis_loss_arr)), dis_loss_arr, color='red', label='Discrim
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/dcgan_plane_loss.png')
+plt.savefig('./output/dcgan_NewLoss.png')
