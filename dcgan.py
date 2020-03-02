@@ -31,7 +31,7 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
                  download=False):
         super().__init__(root, train, transform, target_transform, download)
 
-        bird_label = 2
+        bird_label = 0
         horse_label = 7
 
         valid_classes = [bird_label, horse_label] # index of birds and horses
@@ -179,7 +179,7 @@ for i in range(BATCH_SIZE):
     plt.grid(False)
     plt.imshow(g[i].cpu().data.permute(0,2,1).contiguous().permute(2,1,0), cmap=plt.cm.binary)
 
-plt.savefig('./output/dcgan_pegasus2.png')
+plt.savefig('./output/dcgan_plane_pegasus.png')
 
 plt.cla()
 plt.clf()
@@ -191,4 +191,4 @@ plt.plot(x_axis, dis_loss_arr, color='red', label='Discriminator loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/dcgan_loss.png')
+plt.savefig('./output/dcgan_plane_loss.png')
