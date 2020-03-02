@@ -201,7 +201,7 @@ else:
     num_images_displayed = 0
     batch_num = 0
     while num_images_displayed < 64:
-        plt.subplot(8,8,i+1)
+        plt.subplot(8,8,num_images_displayed+1)
         plt.xticks([])
         plt.yticks([])
         plt.grid(False)
@@ -211,6 +211,7 @@ else:
         batch_num += 1
 
         if batch_num >= BATCH_SIZE:
+            batch_num = 0
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 
