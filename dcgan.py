@@ -162,14 +162,14 @@ for epoch in range(NUM_EPOCHS):
         gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
 
-    print('Training epoch %d complete')
+    print('Training epoch %d complete' % epoch)
 
 x,t = next(train_iterator)
 x,t = x.to(device), t.to(device)
 g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 plt.figure(figsize=(10,10))
-for i in range(64):
+for i in range(BATCH_SIZE):
     plt.subplot(8,8,i+1)
     plt.xticks([])
     plt.yticks([])

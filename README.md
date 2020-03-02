@@ -54,6 +54,9 @@ Deep Learning Coursework for software, systems and applications 3rd year module
   - Remove fully connected hidden layers for deeper architectures
   - Use ReLU activation in the generator for all layers except for the output, which uses Tanh
   - Use LeakyReLU activation in the discriminator
+
+### Normalisation techniques
+- Spectral normalisation increases training stability, paper on it [here](https://arxiv.org/pdf/1802.05957.pdf)
   
 ### WGANs 
 - WGAN paper found [here](https://arxiv.org/pdf/1701.07875.pdf)
