@@ -25,6 +25,8 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 16
 NUM_EPOCHS = 25
+DG_RATIO = 5
+
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
     def __init__(self, root, train=True, transform=None, target_transform=None,
@@ -127,14 +129,14 @@ test_iterator = iter(cycle(test_loader))
 G = Generator().to(device)
 D = Discriminator().to(device)
 
-DG_ratio = 5
 
 # initialise the optimiser
 optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002, betas=(0.5,0.99))
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002, betas=(0.5,0.99))
 bce_loss = nn.BCELoss()
 
-
+gen_loss_per_epoch = []
+dis_loss_per_epoch = []
 # # training loop
 for epoch in range(NUM_EPOCHS):
     
@@ -166,7 +168,7 @@ for epoch in range(NUM_EPOCHS):
         dg_count += 1
         
         #if trained discriminator enough
-        if dg_count == DG_ratio:
+        if dg_count == DG_RATIO:
             # train generator
             optimiser_G.zero_grad()
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
@@ -174,15 +176,20 @@ for epoch in range(NUM_EPOCHS):
             loss_g.backward()
             optimiser_G.step()
 
-
-            for _ in range(DG_ratio):
+            # append multiple to make plot easier to visualise
+            for _ in range(DG_RATIO):
                 gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
 
             dg_count = 0
             
 
+    gen_loss_per_epoch.append(gen_loss_arr[len(gen_loss_arr)])
+    dis_loss_per_epoch.append(dis_loss_arr[len(dis_loss_arr)])
+
     print('Training epoch %d complete' % epoch)
 
+
+# display pegasus attempts
 x,t = next(train_iterator)
 x,t = x.to(device), t.to(device)
 g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
@@ -214,15 +221,32 @@ else:
             batch_num = 0
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
-
+# save output
 plt.savefig('./output/dcgan_NewPegasus.png')
+
+# clear figures
+plt.cla()
+plt.clf()
+
+# plot loss data for final epoch
+
+plt.plot(np.arange(len(gen_loss_arr)), gen_loss_arr, color='green', label='Generator loss')
+plt.plot(np.arange(len(dis_loss_arr)), dis_loss_arr, color='red', label='Discriminator loss')
+plt.title('Loss in final epoch')
+plt.ylabel('Loss')
+plt.xlabel('Training iteration')
+plt.legend(loc=2)
+plt.savefig('./output/dcgan_NewLoss.png')
 
 plt.cla()
 plt.clf()
 
-plt.plot(np.arange(len(gen_loss_arr)), gen_loss_arr, color='green', label='Generator loss')
-plt.plot(np.arange(len(dis_loss_arr)), dis_loss_arr, color='red', label='Discriminator loss')
+# plot loss data for final training cycle on each epoch
+
+plt.plot(np.arange(len(gen_loss_per_epoch)), gen_loss_per_epoch, color='green', label='Generator loss')
+plt.plot(np.arange(len(dis_loss_per_epoch)), dis_loss_per_epoch, color='red', label='Discriminator loss')
+plt.title('Loss over all epochs')
 plt.ylabel('Loss')
-plt.xlabel('Training iteration')
+plt.xlabel('Epoch')
 plt.legend(loc=2)
 plt.savefig('./output/dcgan_NewLoss.png')

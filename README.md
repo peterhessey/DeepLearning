@@ -50,6 +50,7 @@ Deep Learning Coursework for software, systems and applications 3rd year module
 ### Training tips
 - [How to train a GAN Facebook AI](https://www.youtube.com/watch?time_continue=8&v=X1mUN6dD8uE&feature=emb_logo)
 - [GAN architectures for beginners](https://sigmoidal.io/beginners-review-of-gan-architectures/)
+- [More on GAN architectures](https://julianzaidi.wordpress.com/2017/04/24/deep-convolution-gan-dcgan-architecture-and-training/)
   
 ### DCGANs
 - Paper on Deep Convolutional Generative Adversarial Networks [here](https://arxiv.org/pdf/1511.06434.pdf)
@@ -65,6 +66,7 @@ Deep Learning Coursework for software, systems and applications 3rd year module
 
 ### Normalisation techniques
 - Spectral normalisation increases training stability, paper on it [here](https://arxiv.org/pdf/1802.05957.pdf)
+  - Code [here](https://github.com/pfnet-research/sngan_projection/blob/master/requirements.txt)
   
 ### WGANs 
 - WGAN paper found [here](https://arxiv.org/pdf/1701.07875.pdf)
