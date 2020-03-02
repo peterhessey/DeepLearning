@@ -1,0 +1,32 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(dcgan.py:3248): Gdk-CRITICAL **: 10:42:12.303: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+slurmstepd-gpu3: error: *** JOB 38256 ON gpu3 CANCELLED AT 2020-03-02T10:42:21 ***
+Files already downloaded and verified
+Files already downloaded and verified
+Training epoch 0 complete
+Training epoch 1 complete
+Training epoch 2 complete
+Training epoch 3 complete
+Training epoch 4 complete
+Training epoch 5 complete
+Training epoch 6 complete
+Training epoch 7 complete
+Training epoch 8 complete
+Training epoch 9 complete
+Training epoch 10 complete
+Training epoch 11 complete
+Training epoch 12 complete
+Training epoch 13 complete
+Training epoch 14 complete
+Training epoch 15 complete
+Training epoch 16 complete
+Training epoch 17 complete
+Training epoch 18 complete
+Training epoch 19 complete
+Training epoch 20 complete
+Training epoch 21 complete
+Training epoch 22 complete
+Training epoch 23 complete
+Training epoch 24 complete

@@ -5,7 +5,7 @@
 #SBATCH -p ug-gpu-small
 #SBATCH --qos=short
 #SBATCH --job-name=dcganPegasus
-#SBATCH -o ./dcganOutput.txt
+#SBATCH -o ./output/dcganOutput.txt
 
 source /etc/profile
 module load cuda/10.1
