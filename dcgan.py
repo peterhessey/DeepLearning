@@ -12,6 +12,7 @@ Original file is located at
 """**Main imports**"""
 
 import math
+import random
 import numpy as np
 import torch
 import torch.nn as nn
@@ -25,6 +26,7 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
+P_SWITCH = 0.1
 DG_RATIO = 1
 
 
@@ -158,11 +160,15 @@ for epoch in range(NUM_EPOCHS):
             # train generator
             optimiser_G.zero_grad()
             g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
-            # loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
+            
+            
+            # probabilistic label switching
+            switch_rand = random.rand()
 
-            # have switched labels here!
-
-            loss_g = bce_loss(D.discriminate(g).mean(), torch.zeros(1)[0].to(device)) # fake -> 0
+            if P_SWITCH < switch_rand:
+                loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
+            else:
+                loss_g = bce_loss(D.discriminate(g).mean(), torch.zeros(1)[0].to(device)) # fake -> 0
 
             loss_g.backward()
             optimiser_G.step()
@@ -212,7 +218,7 @@ else:
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 # save output
-plt.savefig('./output/pegasus_gSwitched.png')
+plt.savefig('./output/pegasus_p01.png')
 
 # clear figures
 plt.cla()
@@ -226,7 +232,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_gSwitched.png')
+plt.savefig('./output/loss_p01.png')
 
 plt.cla()
 plt.clf()
@@ -239,4 +245,4 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_gSwitched.png')
+plt.savefig('./output/epoch_p01.png')
