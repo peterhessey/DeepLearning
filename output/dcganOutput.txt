@@ -1,0 +1,99 @@
+Unable to init server: Could not connect: Connection refused
+Unable to init server: Could not connect: Connection refused
+
+(dcgan.py:29024): Gdk-CRITICAL **: 11:30:29.629: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Files already downloaded and verified
+Files already downloaded and verified
+tensor([[[0.5020, 0.4980, 0.5020,  ..., 0.5765, 0.5765, 0.5765],
+         [0.5255, 0.5255, 0.5255,  ..., 0.5922, 0.5882, 0.5882],
+         [0.5373, 0.5333, 0.5373,  ..., 0.5961, 0.5922, 0.5882],
+         ...,
+         [0.5176, 0.4549, 0.4314,  ..., 0.5765, 0.5765, 0.5765],
+         [0.5059, 0.4784, 0.4824,  ..., 0.5765, 0.5765, 0.5765],
+         [0.4902, 0.4824, 0.4941,  ..., 0.5647, 0.5647, 0.5647]],
+
+        [[0.4157, 0.4157, 0.4157,  ..., 0.5255, 0.5216, 0.5216],
+         [0.4314, 0.4314, 0.4275,  ..., 0.5255, 0.5255, 0.5216],
+         [0.4353, 0.4314, 0.4314,  ..., 0.5176, 0.5176, 0.5137],
+         ...,
+         [0.5255, 0.4549, 0.4078,  ..., 0.5725, 0.5686, 0.5686],
+         [0.5255, 0.4667, 0.4667,  ..., 0.5725, 0.5725, 0.5686],
+         [0.5176, 0.4941, 0.5059,  ..., 0.5647, 0.5608, 0.5569]],
+
+        [[0.2275, 0.2275, 0.2314,  ..., 0.3765, 0.3804, 0.3804],
+         [0.2392, 0.2392, 0.2353,  ..., 0.3647, 0.3686, 0.3686],
+         [0.2392, 0.2392, 0.2392,  ..., 0.3490, 0.3529, 0.3529],
+         ...,
+         [0.1176, 0.1137, 0.1882,  ..., 0.1529, 0.1608, 0.1647],
+         [0.1216, 0.1294, 0.1686,  ..., 0.1529, 0.1569, 0.1647],
+         [0.1176, 0.1216, 0.1255,  ..., 0.1490, 0.1529, 0.1569]]])
+Training epoch 0 complete
+Training epoch 1 complete
+Training epoch 2 complete
+Training epoch 3 complete
+Training epoch 4 complete
+Training epoch 5 complete
+Training epoch 6 complete
+Training epoch 7 complete
+Training epoch 8 complete
+Training epoch 9 complete
+Training epoch 10 complete
+Training epoch 11 complete
+Training epoch 12 complete
+Training epoch 13 complete
+Training epoch 14 complete
+Training epoch 15 complete
+Training epoch 16 complete
+Training epoch 17 complete
+Training epoch 18 complete
+Training epoch 19 complete
+Training epoch 20 complete
+Training epoch 21 complete
+Training epoch 22 complete
+Training epoch 23 complete
+Training epoch 24 complete
