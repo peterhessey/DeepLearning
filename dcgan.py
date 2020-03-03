@@ -33,13 +33,14 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
                  download=False):
         super().__init__(root, train, transform, target_transform, download)
 
+        plane_label = 0
         bird_label = 2
         horse_label = 7
 
-        valid_classes = [bird_label, horse_label] # index of birds and horses
+        valid_classes = [plane_label, bird_label, horse_label] # index of birds and horses
 
-        bird_and_horse_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
-        bird_and_horse_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
+        pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
+        pegasus_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
         # #switch the labels around
         # for i in range(len(bird_and_horse_targets)):
@@ -120,7 +121,9 @@ test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=BAT
 G = Generator().to(device)
 D = Discriminator().to(device)
 
-
+for batch, targets in train_loader:
+    print(batch[0])
+    break
 # initialise the optimiser
 optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002, betas=(0.5,0.99))
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002, betas=(0.5,0.99))
@@ -162,7 +165,12 @@ for epoch in range(NUM_EPOCHS):
             # train generator
             optimiser_G.zero_grad()
             g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
-            loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
+            # loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
+
+            # have switched labels here!
+
+            loss_g = bce_loss(D.discriminate(g).mean(), torch.zeros(1)[0].to(device)) # fake -> 0
+
             loss_g.backward()
             optimiser_G.step()
 
