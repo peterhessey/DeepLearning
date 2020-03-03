@@ -26,7 +26,7 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 0.5
+P_SWITCH = 0.25
 DG_RATIO = 1
 
 
@@ -218,7 +218,7 @@ else:
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 # save output
-plt.savefig('./output/pegasus_p05.png')
+plt.savefig('./output/pegasus_p025.png')
 
 # clear figures
 plt.cla()
@@ -232,7 +232,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_p05.png')
+plt.savefig('./output/loss_p025.png')
 
 plt.cla()
 plt.clf()
@@ -245,4 +245,4 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_p05.png')
+plt.savefig('./output/epoch_p025.png')
