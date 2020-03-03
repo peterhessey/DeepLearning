@@ -221,7 +221,7 @@ else:
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 # save output
-plt.savefig('./output/pegasus_p075.png')
+plt.savefig('./output/pegasus_p025soft.png')
 
 # clear figures
 plt.cla()
@@ -235,7 +235,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_p075.png')
+plt.savefig('./output_p025soft.png')
 
 plt.cla()
 plt.clf()
@@ -248,4 +248,4 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_p075.png')
+plt.savefig('./output/epoch_p025soft.png')
