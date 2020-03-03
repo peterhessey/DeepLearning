@@ -29,7 +29,7 @@ Notes on [this](https://www.youtube.com/watch?time_continue=8&v=X1mUN6dD8uE&feat
 ### 5. Avoid sparse gradients
 - Avoid ReLU, MaxPool
 - LeakyReLU (both G and D) *this is new*
-- sparse gradients are not as nice for generative models as for generative models
+- sparse gradients are not as nice for generative models as for discriminative models
 
 ### 6. Soft and Noisy labels
 - Label smoothing: rather than using 0 for fake and 1 for real, soften them to a stochastic value (0 to 0.3 and 0.7 to 1 for example)

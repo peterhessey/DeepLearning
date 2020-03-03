@@ -26,8 +26,9 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 0.75
+P_SWITCH = 0.25
 DG_RATIO = 1
+LABEL_SOFTNESS = 0.3
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -116,9 +117,7 @@ test_loader = torch.utils.data.DataLoader(test_set, shuffle=True, batch_size=BAT
 G = Generator().to(device)
 D = Discriminator().to(device)
 
-for batch, targets in train_loader:
-    print(batch[0])
-    break
+
 # initialise the optimiser
 optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002, betas=(0.5,0.99))
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002, betas=(0.5,0.99))
@@ -166,9 +165,13 @@ for epoch in range(NUM_EPOCHS):
             switch_rand = random.random()
 
             if P_SWITCH < switch_rand:
-                loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
+
+                soft_upper_tensor = torch.ones(1) - torch.randn(1) * LABEL_SOFTNESS
+                loss_g = bce_loss(D.discriminate(g).mean(), soft_upper_tensor[0].to(device)) # fake -> 1
+            
             else:
-                loss_g = bce_loss(D.discriminate(g).mean(), torch.zeros(1)[0].to(device)) # fake -> 0
+                soft_lower_tensor = torch.randn(1) * LABEL_SOFTNESS
+                loss_g = bce_loss(D.discriminate(g).mean(), soft_lower_tensor[0].to(device)) # fake -> 0
 
             loss_g.backward()
             optimiser_G.step()
