@@ -41,12 +41,12 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         bird_and_horse_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
         bird_and_horse_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
-        #switch the labels around
-        for i in range(len(bird_and_horse_targets)):
-            if bird_and_horse_targets[i] == bird_label:
-                bird_and_horse_targets[i] = horse_label
-            else:
-                bird_and_horse_targets[i] = bird_label
+        # #switch the labels around
+        # for i in range(len(bird_and_horse_targets)):
+        #     if bird_and_horse_targets[i] == bird_label:
+        #         bird_and_horse_targets[i] = horse_label
+        #     else:
+        #         bird_and_horse_targets[i] = bird_label
 
         self.data = bird_and_horse_data
         self.targets = bird_and_horse_targets
@@ -211,7 +211,7 @@ else:
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 # save output
-plt.savefig('./output/dcgan_NewPegasus.png')
+plt.savefig('./output/dcgan_Pegasus_Unswitched.png')
 
 # clear figures
 plt.cla()
@@ -225,7 +225,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/dcgan_final_loss.png')
+plt.savefig('./output/dcgan_loss_unswitched.png')
 
 plt.cla()
 plt.clf()
@@ -238,4 +238,4 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/dcgan_loss_per_epoch.png')
+plt.savefig('./output/dcgan_loss_epoch_unswitched.png')
