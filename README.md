@@ -70,5 +70,7 @@ Deep Learning Coursework for software, systems and applications 3rd year module
   
 ### WGANs 
 - WGAN paper found [here](https://arxiv.org/pdf/1701.07875.pdf)
-- 
+
+### Spherical space sampling
+- Latent space sampling paper found [here](https://arxiv.org/pdf/1609.04468.pdf)
   
