@@ -163,7 +163,7 @@ for epoch in range(NUM_EPOCHS):
             
             
             # probabilistic label switching
-            switch_rand = random.rand()
+            switch_rand = random.random()
 
             if P_SWITCH < switch_rand:
                 loss_g = bce_loss(D.discriminate(g).mean(), torch.ones(1)[0].to(device)) # fake -> 1
