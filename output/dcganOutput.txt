@@ -1,23 +1,10 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(dcgan.py:11942): Gdk-CRITICAL **: 17:08:29.471: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-/home2/mxjf75/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py:498: UserWarning: Using a target size (torch.Size([64])) that is different to the input size (torch.Size([64, 1, 1, 1])) is deprecated. Please ensure they have the same size.
+(dcgan.py:13305): Gdk-CRITICAL **: 17:18:01.713: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+slurmstepd-gpu4: error: *** JOB 38950 ON gpu4 CANCELLED AT 2020-03-04T17:18:05 ***
+/home2/mxjf75/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py:498: UserWarning: Using a target size (torch.Size([32])) that is different to the input size (torch.Size([32, 1, 1, 1])) is deprecated. Please ensure they have the same size.
   return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
@@ -74,3 +61,28 @@ Training epoch 21 complete
 Training epoch 22 complete
 Training epoch 23 complete
 Training epoch 24 complete
+Training epoch 25 complete
+Training epoch 26 complete
+Training epoch 27 complete
+Training epoch 28 complete
+Training epoch 29 complete
+Training epoch 30 complete
+Training epoch 31 complete
+Training epoch 32 complete
+Training epoch 33 complete
+Training epoch 34 complete
+Training epoch 35 complete
+Training epoch 36 complete
+Training epoch 37 complete
+Training epoch 38 complete
+Training epoch 39 complete
+Training epoch 40 complete
+Training epoch 41 complete
+Training epoch 42 complete
+Training epoch 43 complete
+Training epoch 44 complete
+Training epoch 45 complete
+Training epoch 46 complete
+Training epoch 47 complete
+Training epoch 48 complete
+Training epoch 49 complete
