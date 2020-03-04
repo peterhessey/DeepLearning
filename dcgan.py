@@ -22,11 +22,11 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-BATCH_SIZE = 64
-NUM_EPOCHS = 25
+BATCH_SIZE = 32
+NUM_EPOCHS = 50
 P_SWITCH = 1
-DG_RATIO = 3
-LABEL_SOFTNESS = 0.3
+DG_RATIO = 1
+LABEL_SOFTNESS = 0.25
 NORMALISE = False
 
 
