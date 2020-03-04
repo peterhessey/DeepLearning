@@ -24,9 +24,9 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 0
+P_SWITCH = 1
 DG_RATIO = 1
-LABEL_SOFTNESS = 0
+LABEL_SOFTNESS = 0.3
 NORMALISE = False
 
 
