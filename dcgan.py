@@ -25,7 +25,7 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
 P_SWITCH = 1
-DG_RATIO = 1
+DG_RATIO = 3
 LABEL_SOFTNESS = 0.3
 NORMALISE = False
 
@@ -247,8 +247,9 @@ else:
                 g = np.interp(g, (-1, 1), (0, 1))
 
 # save output
-plt.savefig('./output/pegasus_%sb%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/pegasus_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
                                                 BATCH_SIZE, 
+                                                str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
                                                 str(LABEL_SOFTNESS).replace('.', '')))
 
@@ -264,10 +265,11 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_%sb%sp%ss%s.png' % ('N' if NORMALISE else 'O',
-                                             BATCH_SIZE, 
-                                             str(P_SWITCH).replace('.', ''),
-                                             str(LABEL_SOFTNESS).replace('.', '')))
+plt.savefig('./output/loss_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+                                                BATCH_SIZE, 
+                                                str(DG_RATIO),
+                                                str(P_SWITCH).replace('.', ''),
+                                                str(LABEL_SOFTNESS).replace('.', '')))
 
 plt.cla()
 plt.clf()
@@ -280,7 +282,8 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_%sb%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/epoch_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
                                                 BATCH_SIZE, 
+                                                str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
                                                 str(LABEL_SOFTNESS).replace('.', '')))
