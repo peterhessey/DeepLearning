@@ -24,11 +24,11 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 NUM_EPOCHS = 25
-P_SWITCH = 0.1
+P_SWITCH = 0.25
 DG_RATIO = 1
-LABEL_SOFTNESS = 0.1
+LABEL_SOFTNESS = 0.2
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
