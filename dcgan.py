@@ -24,11 +24,11 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 0.25
+P_SWITCH = 1
 DG_RATIO = 1
-LABEL_SOFTNESS = 0.2
+LABEL_SOFTNESS = 0
 NORMALISE = False
 
 
@@ -180,6 +180,7 @@ for epoch in range(NUM_EPOCHS):
         l_f.backward()
         optimiser_D.step()
 
+        loss_d = (l_r + l_f) / 2
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
 
         #used for dg_ratio
