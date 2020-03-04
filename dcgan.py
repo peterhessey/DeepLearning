@@ -24,9 +24,9 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 1
-DG_RATIO = 3
-LABEL_SOFTNESS = 0.3
+P_SWITCH = 0
+DG_RATIO = 1
+LABEL_SOFTNESS = 0
 NORMALISE = False
 
 
@@ -152,36 +152,37 @@ for epoch in range(NUM_EPOCHS):
         batch, targets = batch.to(device), targets.to(device)
 
         # applying label softness
-        soft_upper_tensor = torch.ones(1) - torch.randn(1) * LABEL_SOFTNESS
-        soft_lower_tensor = torch.randn(1) * LABEL_SOFTNESS
+        real_label = torch.full((BATCH_SIZE,), 1 * (1 - random.random() *LABEL_SOFTNESS), device=device)
+        fake_label = torch.full((BATCH_SIZE,), 1 * LABEL_SOFTNESS, device=device)
+
+        # if switching labels
+        if P_SWITCH < switch_rand:
+            temp = real_label.copy()
+            real_label = fake_label.copy()
+            fake_label = temp
 
         # train discriminator 
         optimiser_D.zero_grad()
 
         # process all real batch first
-        g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
 
-        if P_SWITCH < switch_rand:
-            l_r = bce_loss(D.discriminate(batch).mean(), soft_upper_tensor[0].to(device)) # real -> 1
-        else:
-            l_r = bce_loss(D.discriminate(batch).mean(), soft_lower_tensor[0].to(device)) # real -> 0
-        
+        # calculate real loss
+        l_r = bce_loss(D.discriminate(batch), real_label) # real -> 1
+        # backpropogate
         l_r.backward()
         
         # process all fake batch
-
-        if P_SWITCH < switch_rand:
-            l_f = bce_loss(D.discriminate(g.detach()).mean(), soft_lower_tensor[0].to(device)) #  fake -> 0
-        else:
-            l_f = bce_loss(D.discriminate(g.detach()).mean(), soft_upper_tensor[0].to(device)) #  fake -> 1
-        
+        g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
+        # calculate fake loss
+        l_f = bce_loss(D.discriminate(g), fake_label) #  fake -> 0      
+        # backpropogate
         l_f.backward()
 
         # step optimsier
         optimiser_D.step()
 
         loss_d = (l_r + l_f) / 2
-        dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
+        dis_loss_arr = np.append(dis_loss_arr, loss_d.mean().item())
 
         #used for dg_ratio
         dg_count += 1
@@ -191,21 +192,15 @@ for epoch in range(NUM_EPOCHS):
             # train generator
             optimiser_G.zero_grad()
             g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
-            
-            # labels are reversed for g
-            if P_SWITCH < switch_rand:                
-                loss_g = bce_loss(D.discriminate(g).mean(), soft_upper_tensor[0].to(device)) # fake -> 1
-            
-            else:
-                
-                loss_g = bce_loss(D.discriminate(g).mean(), soft_lower_tensor[0].to(device)) # fake -> 0
+
+            loss_g = bce_loss(D.discriminate(g).view(-1), real_label) # fake -> 1
 
             loss_g.backward()
             optimiser_G.step()
 
             # append multiple to make plot easier to visualise
             for _ in range(DG_RATIO):
-                gen_loss_arr = np.append(gen_loss_arr, loss_g.item())
+                gen_loss_arr = np.append(gen_loss_arr, loss_g.mean().item())
 
             dg_count = 0
             
