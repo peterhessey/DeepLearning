@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/gist/cwkx/74e33bc96f94f381bd15032d57e43786/simple-gan.ipynb
 """
 
-
-
 """**Main imports**"""
 
 import math
@@ -26,7 +24,7 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 1
+P_SWITCH = 0
 DG_RATIO = 1
 LABEL_SOFTNESS = 0
 NORMALISE = False
@@ -150,12 +148,12 @@ for epoch in range(NUM_EPOCHS):
 
     # iterate over the training dataset
     for batch, targets in train_loader:
-        
+
+        batch, targets = batch.to(device), targets.to(device)
+
         # applying label softness
         soft_upper_tensor = torch.ones(1) - torch.randn(1) * LABEL_SOFTNESS
         soft_lower_tensor = torch.randn(1) * LABEL_SOFTNESS
-
-        batch, targets = batch.to(device), targets.to(device)
 
         # train discriminator 
         optimiser_D.zero_grad()
@@ -178,6 +176,8 @@ for epoch in range(NUM_EPOCHS):
             l_f = bce_loss(D.discriminate(g.detach()).mean(), soft_upper_tensor[0].to(device)) #  fake -> 1
         
         l_f.backward()
+
+        # step optimsier
         optimiser_D.step()
 
         loss_d = (l_r + l_f) / 2
@@ -269,7 +269,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output.loss_%sb%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/loss_%sb%sp%ss%s.png' % ('N' if NORMALISE else 'O',
                                              BATCH_SIZE, 
                                              str(P_SWITCH).replace('.', ''),
                                              str(LABEL_SOFTNESS).replace('.', '')))
