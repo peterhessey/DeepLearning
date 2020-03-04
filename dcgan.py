@@ -151,14 +151,15 @@ for epoch in range(NUM_EPOCHS):
 
         batch, targets = batch.to(device), targets.to(device)
 
+        #print(batch[0].size(0))
         # applying label softness
         real_label = torch.full((BATCH_SIZE,), 1 * (1 - random.random() *LABEL_SOFTNESS), device=device)
         fake_label = torch.full((BATCH_SIZE,), 1 * LABEL_SOFTNESS, device=device)
 
         # if switching labels
-        if P_SWITCH < switch_rand:
-            temp = real_label.copy()
-            real_label = fake_label.copy()
+        if P_SWITCH > switch_rand:
+            temp = real_label.clone().detach()
+            real_label = fake_label.clone().detach()
             fake_label = temp
 
         # train discriminator 
