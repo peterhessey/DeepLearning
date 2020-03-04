@@ -29,6 +29,7 @@ NUM_EPOCHS = 25
 P_SWITCH = 0.25
 DG_RATIO = 1
 LABEL_SOFTNESS = 0.2
+NORMALISE = True
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -44,6 +45,10 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
+        # normalise to range (-1, 1)
+        if NORMALISE:
+            pegasus_data = np.interp(pegasus_data, (0, 1), (-1, 1))
+
         pegasus_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
         self.data = pegasus_data
@@ -193,6 +198,8 @@ for epoch in range(NUM_EPOCHS):
 # display pegasus attempts
 
 g = G.generate(torch.randn(BATCH_SIZE, 100, 1, 1).to(device))
+if NORMALISE:
+    g = np.interp(g, (-1, 1), (0, 1))
 
 plt.figure(figsize=(10,10))
 
@@ -219,10 +226,12 @@ else:
 
         if batch_num >= BATCH_SIZE:
             batch_num = 0
-            g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
+            g = G.generate(torch.randn(BATCH_SIZE, 100, 1, 1).to(device))
+            if NORMALISE:
+                g = np.interp(g, (-1, 1), (0, 1))
 
 # save output
-plt.savefig('./output/pegasus_b%dp%ss%s.png' % (BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
+plt.savefig('./output/pegasus_b%dp%ss%s.png' % ('N' if NORMALISE else 'O', BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
 
 # clear figures
 plt.cla()
@@ -236,7 +245,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output.loss_b%dp%ss%s.png' % (BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
+plt.savefig('./output.loss_b%dp%ss%s.png' % ('N' if NORMALISE else 'O', BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
 
 plt.cla()
 plt.clf()
@@ -249,4 +258,4 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_b%dp%ss%s.png' % (BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
+plt.savefig('./output/epoch_%sb%dp%ss%s.png' % ('N' if NORMALISE else 'O', BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
