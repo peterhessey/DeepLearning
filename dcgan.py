@@ -26,9 +26,9 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 64
 NUM_EPOCHS = 25
-P_SWITCH = 0.25
+P_SWITCH = 0.1
 DG_RATIO = 1
-LABEL_SOFTNESS = 0.3
+LABEL_SOFTNESS = 0.1
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -38,9 +38,10 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
 
         plane_label = 0
         bird_label = 2
+        deer_label = 4
         horse_label = 7
 
-        valid_classes = [plane_label, bird_label, horse_label] # index of birds and horses
+        valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
         pegasus_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
@@ -221,7 +222,7 @@ else:
             g = G.generate(torch.randn(x.size(0), 100, 1, 1).to(device))
 
 # save output
-plt.savefig('./output/pegasus_p025soft.png')
+plt.savefig('./output/pegasus_b%dp%ss%s.png' % (BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
 
 # clear figures
 plt.cla()
@@ -235,7 +236,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output_p025soft.png')
+plt.savefig('./output.loss_b%dp%ss%s.png' % (BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
 
 plt.cla()
 plt.clf()
@@ -248,4 +249,4 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_p025soft.png')
+plt.savefig('./output/epoch_b%dp%ss%s.png' % (BATCH_SIZE, str(P_SWITCH).replace('.', ''), str(LABEL_SOFTNESS).replace('.', '')))
