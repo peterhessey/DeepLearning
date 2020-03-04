@@ -29,7 +29,7 @@ NUM_EPOCHS = 25
 P_SWITCH = 0.25
 DG_RATIO = 1
 LABEL_SOFTNESS = 0.2
-NORMALISE = True
+NORMALISE = False
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -45,10 +45,12 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
-        # normalise to range (-1, 1)
+        print(type(pegasus_data))
+        # normalise to range (-1, 1) (doesn't work currently)
         if NORMALISE:
             pegasus_data = np.interp(pegasus_data, (0, 1), (-1, 1))
 
+        print(type(pegasus_data))
         pegasus_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
         self.data = pegasus_data
