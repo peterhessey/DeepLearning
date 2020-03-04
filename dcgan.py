@@ -252,7 +252,7 @@ else:
                 g = np.interp(g, (-1, 1), (0, 1))
 
 # save output
-plt.savefig('./output/pegasus_b%dp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/pegasus_b%sp%ss%s.png' % ('N' if NORMALISE else 'O',
                                                 BATCH_SIZE, 
                                                 str(P_SWITCH).replace('.', ''),
                                                 str(LABEL_SOFTNESS).replace('.', '')))
@@ -269,7 +269,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output.loss_b%dp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output.loss_b%sp%ss%s.png' % ('N' if NORMALISE else 'O',
                                              BATCH_SIZE, 
                                              str(P_SWITCH).replace('.', ''),
                                              str(LABEL_SOFTNESS).replace('.', '')))
@@ -285,7 +285,7 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_%sb%dp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/epoch_%sb%sp%ss%s.png' % ('N' if NORMALISE else 'O',
                                                 BATCH_SIZE, 
                                                 str(P_SWITCH).replace('.', ''),
                                                 str(LABEL_SOFTNESS).replace('.', '')))
