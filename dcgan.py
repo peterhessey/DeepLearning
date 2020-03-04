@@ -45,12 +45,13 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
-        print(type(pegasus_data))
+        
+        #print(type(pegasus_data))
         # normalise to range (-1, 1) (doesn't work currently)
         if NORMALISE:
             pegasus_data = np.interp(pegasus_data, (0, 1), (-1, 1))
 
-        print(type(pegasus_data))
+        # print(type(pegasus_data))
         pegasus_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
         self.data = pegasus_data
@@ -131,6 +132,7 @@ optimiser_G = torch.optim.Adam(G.parameters(), lr=0.0002, betas=(0.5,0.99))
 optimiser_D = torch.optim.Adam(D.parameters(), lr=0.0002, betas=(0.5,0.99))
 bce_loss = nn.BCELoss()
 
+
 gen_loss_per_epoch = []
 dis_loss_per_epoch = []
 # # training loop
@@ -143,18 +145,39 @@ for epoch in range(NUM_EPOCHS):
 
     dg_count = 0
 
+    # probabilistic label switching
+    switch_rand = random.random()
+
     # iterate over the training dataset
     for batch, targets in train_loader:
+        
+        # applying label softness
+        soft_upper_tensor = torch.ones(1) - torch.randn(1) * LABEL_SOFTNESS
+        soft_lower_tensor = torch.randn(1) * LABEL_SOFTNESS
 
         batch, targets = batch.to(device), targets.to(device)
 
         # train discriminator 
         optimiser_D.zero_grad()
+
+        # process all real batch first
         g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
-        l_r = bce_loss(D.discriminate(batch).mean(), torch.ones(1)[0].to(device)) # real -> 1
-        l_f = bce_loss(D.discriminate(g.detach()).mean(), torch.zeros(1)[0].to(device)) #  fake -> 0
-        loss_d = (l_r + l_f)/2.0
-        loss_d.backward()
+
+        if P_SWITCH < switch_rand:
+            l_r = bce_loss(D.discriminate(batch).mean(), soft_upper_tensor[0].to(device)) # real -> 1
+        else:
+            l_r = bce_loss(D.discriminate(batch).mean(), soft_lower_tensor[0].to(device)) # real -> 0
+        
+        l_r.backward()
+        
+        # process all fake batch
+
+        if P_SWITCH < switch_rand:
+            l_f = bce_loss(D.discriminate(g.detach()).mean(), soft_lower_tensor[0].to(device)) #  fake -> 0
+        else:
+            l_f = bce_loss(D.discriminate(g.detach()).mean(), soft_upper_tensor[0].to(device)) #  fake -> 1
+        
+        l_f.backward()
         optimiser_D.step()
 
         dis_loss_arr = np.append(dis_loss_arr, loss_d.item())
@@ -168,17 +191,12 @@ for epoch in range(NUM_EPOCHS):
             optimiser_G.zero_grad()
             g = G.generate(torch.randn(batch.size(0), 100, 1, 1).to(device))
             
-            
-            # probabilistic label switching
-            switch_rand = random.random()
-
-            if P_SWITCH < switch_rand:
-
-                soft_upper_tensor = torch.ones(1) - torch.randn(1) * LABEL_SOFTNESS
+            # labels are reversed for g
+            if P_SWITCH < switch_rand:                
                 loss_g = bce_loss(D.discriminate(g).mean(), soft_upper_tensor[0].to(device)) # fake -> 1
             
             else:
-                soft_lower_tensor = torch.randn(1) * LABEL_SOFTNESS
+                
                 loss_g = bce_loss(D.discriminate(g).mean(), soft_lower_tensor[0].to(device)) # fake -> 0
 
             loss_g.backward()
