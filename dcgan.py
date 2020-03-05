@@ -27,7 +27,7 @@ NUM_EPOCHS = 50
 P_SWITCH = 1
 DG_RATIO = 1
 LABEL_SOFTNESS = 0.25
-NORMALISE = False
+NORMALISE = True
 
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -43,11 +43,6 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
-        
-        #print(type(pegasus_data))
-        # normalise to range (-1, 1) (doesn't work currently)
-        if NORMALISE:
-            pegasus_data = np.interp(pegasus_data, (0, 1), (-1, 1))
 
         # print(type(pegasus_data))
         pegasus_targets = [self.targets[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
@@ -63,16 +58,16 @@ class Generator(nn.Module):
         self.generate = nn.Sequential(
             nn.ConvTranspose2d(100, f*8, 4, 2, 1, bias=False),
             nn.BatchNorm2d(64*8),
-            nn.ReLU(True),
+            nn.LeakyReLU(0.2, inplace=True),
             nn.ConvTranspose2d(f*8, f*4, 4, 2, 1, bias=False),
             nn.BatchNorm2d(f*4),
-            nn.ReLU(True),
+            nn.LeakyReLU(0.2, inplace=True),
             nn.ConvTranspose2d(f*4, f*2, 4, 2, 1, bias=False),
             nn.BatchNorm2d(f*2),
-            nn.ReLU(True),
+            nn.LeakyReLU(0.2, inplace=True),
             nn.ConvTranspose2d(f*2, f, 4, 2, 1, bias=False),
             nn.BatchNorm2d(f),
-            nn.ReLU(True),
+            nn.LeakyReLU(0.2, inplace=True),
             nn.ConvTranspose2d(f, 3, 4, 2, 1, bias=False),
             nn.Tanh()
         )
@@ -214,8 +209,7 @@ for epoch in range(NUM_EPOCHS):
 # display pegasus attempts
 
 g = G.generate(torch.randn(BATCH_SIZE, 100, 1, 1).to(device))
-if NORMALISE:
-    g = np.interp(g, (-1, 1), (0, 1))
+
 
 plt.figure(figsize=(10,10))
 
