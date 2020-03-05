@@ -27,8 +27,7 @@ NUM_EPOCHS = 50
 P_SWITCH = 1
 DG_RATIO = 1
 LABEL_SOFTNESS = 0.25
-NORMALISE = True
-
+NORMALISE = False
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
     def __init__(self, root, train=True, transform=None, target_transform=None,
@@ -237,8 +236,7 @@ else:
         if batch_num >= BATCH_SIZE:
             batch_num = 0
             g = G.generate(torch.randn(BATCH_SIZE, 100, 1, 1).to(device))
-            if NORMALISE:
-                g = np.interp(g, (-1, 1), (0, 1))
+            
 
 # save output
 plt.savefig('./output/pegasus_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
