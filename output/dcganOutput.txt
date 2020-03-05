@@ -1,28 +1,9 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(dcgan.py:13305): Gdk-CRITICAL **: 17:18:01.713: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-slurmstepd-gpu4: error: *** JOB 38950 ON gpu4 CANCELLED AT 2020-03-04T17:18:05 ***
+(dcgan.py:20215): Gdk-CRITICAL **: 10:33:17.682: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
 /home2/mxjf75/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py:498: UserWarning: Using a target size (torch.Size([32])) that is different to the input size (torch.Size([32, 1, 1, 1])) is deprecated. Please ensure they have the same size.
   return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
@@ -86,3 +67,12 @@ Training epoch 46 complete
 Training epoch 47 complete
 Training epoch 48 complete
 Training epoch 49 complete
+Traceback (most recent call last):
+  File "./dcgan.py", line 241, in <module>
+    g = np.interp(g, (-1, 1), (0, 1))
+  File "<__array_function__ internals>", line 6, in interp
+  File "/home2/mxjf75/.local/lib/python3.6/site-packages/numpy/lib/function_base.py", line 1412, in interp
+    return interp_func(x, xp, fp, left, right)
+  File "/home2/mxjf75/.local/lib/python3.6/site-packages/torch/tensor.py", line 488, in __array__
+    return self.numpy().astype(dtype, copy=False)
+TypeError: can't convert CUDA tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
