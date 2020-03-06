@@ -24,9 +24,9 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 32
 NUM_EPOCHS = 50
-P_SWITCH = 0.75
+P_SWITCH = 0.9
 DG_RATIO = 1
-LABEL_SOFTNESS = 0.25
+LABEL_SOFTNESS = 0.3
 NORMALISE = False
 
 class PegasusDataset(torchvision.datasets.CIFAR10):
@@ -56,7 +56,7 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
         self.generate = nn.Sequential(
             nn.ConvTranspose2d(100, f*8, 4, 2, 1, bias=False),
-            nn.BatchNorm2d(64*8),
+            nn.BatchNorm2d(f*8),
             nn.LeakyReLU(0.2, inplace=True),
             nn.ConvTranspose2d(f*8, f*4, 4, 2, 1, bias=False),
             nn.BatchNorm2d(f*4),

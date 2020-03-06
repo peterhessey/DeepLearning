@@ -15,14 +15,22 @@
 
 ## Architecture Description and design choices
 - DCGAN: one of the most stable models for these sorts of tasks
-  - Split batch training on discriminator
-  - Soft labels
-  - Label switching
-- Training on horse, bird, plane and deer data
-  - Planes have more spread wings
+- LeakyReLU
+- BatchNorm
+- Conv2DTranspose
+- No MaxPooling or Unpooling
+
 - Reducing loss and loss noise:
   - DG_ratio, normalising data
-- Hyperparameter choices: 
+
+
+### Training and sampling
+- Split batch training on discriminator
+- Soft labels
+- Label switching
+- Training on horse, bird, plane and deer data
+  - Planes have more spread wings
+- - Hyperparameter choices: 
   - Batch size
   - Label softness
   - Probability of switching labels
