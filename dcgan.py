@@ -52,7 +52,7 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
 
 # define the model
 class Generator(nn.Module):
-    def __init__(self, f=32):
+    def __init__(self, f=128):
         super(Generator, self).__init__()
         self.generate = nn.Sequential(
             nn.ConvTranspose2d(100, f*8, 4, 2, 1, bias=False),
@@ -73,7 +73,7 @@ class Generator(nn.Module):
 
 
 class Discriminator(nn.Module):
-    def __init__(self, f=32):
+    def __init__(self, f=128):
         super(Discriminator, self).__init__()
         self.discriminate = nn.Sequential(
             nn.Conv2d(3, f, 4, 2, 1, bias=False),
@@ -239,7 +239,7 @@ else:
             
 
 # save output
-plt.savefig('./output/pegasus_f32_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
+plt.savefig('./output/pegasus_f128_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
@@ -257,7 +257,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_f32_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
+plt.savefig('./output/loss_f128_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
@@ -274,7 +274,7 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_f32_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
+plt.savefig('./output/epoch_f128_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
