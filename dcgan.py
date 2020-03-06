@@ -22,8 +22,8 @@ from time import sleep
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-BATCH_SIZE = 16
-NUM_EPOCHS = 100
+BATCH_SIZE = 32
+NUM_EPOCHS = 50
 P_SWITCH = 1
 DG_RATIO = 1
 LABEL_SOFTNESS = 0.25
@@ -39,7 +39,7 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         deer_label = 4
         horse_label = 7
 
-        valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
+        valid_classes = [plane_label, bird_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
@@ -239,7 +239,7 @@ else:
             
 
 # save output
-plt.savefig('./output/pegasus_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
+plt.savefig('./output/pegasus_no_deer_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
@@ -257,7 +257,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
+plt.savefig('./output/loss_no_deer_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
@@ -274,7 +274,7 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
+plt.savefig('./output/epoch_no_deer_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
