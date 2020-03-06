@@ -1,11 +1,9 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(dcgan.py:8539): Gdk-CRITICAL **: 11:59:57.061: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+(dcgan.py:11265): Gdk-CRITICAL **: 12:31:05.225: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
 /home2/mxjf75/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py:498: UserWarning: Using a target size (torch.Size([32])) that is different to the input size (torch.Size([32, 1, 1, 1])) is deprecated. Please ensure they have the same size.
   return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
-Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
