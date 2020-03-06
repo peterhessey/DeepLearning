@@ -239,7 +239,7 @@ else:
             
 
 # save output
-plt.savefig('./output/pegasus_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/pegasus_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
@@ -257,7 +257,7 @@ plt.title('Loss in final epoch')
 plt.ylabel('Loss')
 plt.xlabel('Training iteration')
 plt.legend(loc=2)
-plt.savefig('./output/loss_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/loss_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
@@ -274,7 +274,7 @@ plt.title('Loss over all epochs')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc=2)
-plt.savefig('./output/epoch_%sb%sd%sp%ss%s.png' % ('N' if NORMALISE else 'O',
+plt.savefig('./output/epoch_e%sb%sd%sp%ss%s.png' % (str(NUM_EPOCHS),
                                                 BATCH_SIZE, 
                                                 str(DG_RATIO),
                                                 str(P_SWITCH).replace('.', ''),
