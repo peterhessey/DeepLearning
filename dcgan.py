@@ -24,7 +24,7 @@ class_names = ['airplane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse',
 
 BATCH_SIZE = 32
 NUM_EPOCHS = 50
-P_SWITCH = 1
+P_SWITCH = 0.75
 DG_RATIO = 1
 LABEL_SOFTNESS = 0.25
 NORMALISE = False
@@ -39,7 +39,7 @@ class PegasusDataset(torchvision.datasets.CIFAR10):
         deer_label = 4
         horse_label = 7
 
-        valid_classes = [plane_label, deer_label, horse_label] # index of birds and horses
+        valid_classes = [plane_label, bird_label, deer_label, horse_label] # index of birds and horses
 
         pegasus_data = [self.data[i] for i in range(len(self.targets)) if self.targets[i] in valid_classes]
 
