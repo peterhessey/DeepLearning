@@ -1,9 +1,25 @@
 Unable to init server: Could not connect: Connection refused
 Unable to init server: Could not connect: Connection refused
 
-(dcgan.py:4029): Gdk-CRITICAL **: 11:14:19.786: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
-/home2/mxjf75/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py:498: UserWarning: Using a target size (torch.Size([16])) that is different to the input size (torch.Size([16, 1, 1, 1])) is deprecated. Please ensure they have the same size.
+(dcgan.py:8539): Gdk-CRITICAL **: 11:59:57.061: gdk_cursor_new_for_display: assertion 'GDK_IS_DISPLAY (display)' failed
+/home2/mxjf75/.local/lib/python3.6/site-packages/torch/nn/modules/loss.py:498: UserWarning: Using a target size (torch.Size([32])) that is different to the input size (torch.Size([32, 1, 1, 1])) is deprecated. Please ensure they have the same size.
   return F.binary_cross_entropy(input, target, weight=self.weight, reduction=self.reduction)
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
@@ -80,53 +96,3 @@ Training epoch 46 complete
 Training epoch 47 complete
 Training epoch 48 complete
 Training epoch 49 complete
-Training epoch 50 complete
-Training epoch 51 complete
-Training epoch 52 complete
-Training epoch 53 complete
-Training epoch 54 complete
-Training epoch 55 complete
-Training epoch 56 complete
-Training epoch 57 complete
-Training epoch 58 complete
-Training epoch 59 complete
-Training epoch 60 complete
-Training epoch 61 complete
-Training epoch 62 complete
-Training epoch 63 complete
-Training epoch 64 complete
-Training epoch 65 complete
-Training epoch 66 complete
-Training epoch 67 complete
-Training epoch 68 complete
-Training epoch 69 complete
-Training epoch 70 complete
-Training epoch 71 complete
-Training epoch 72 complete
-Training epoch 73 complete
-Training epoch 74 complete
-Training epoch 75 complete
-Training epoch 76 complete
-Training epoch 77 complete
-Training epoch 78 complete
-Training epoch 79 complete
-Training epoch 80 complete
-Training epoch 81 complete
-Training epoch 82 complete
-Training epoch 83 complete
-Training epoch 84 complete
-Training epoch 85 complete
-Training epoch 86 complete
-Training epoch 87 complete
-Training epoch 88 complete
-Training epoch 89 complete
-Training epoch 90 complete
-Training epoch 91 complete
-Training epoch 92 complete
-Training epoch 93 complete
-Training epoch 94 complete
-Training epoch 95 complete
-Training epoch 96 complete
-Training epoch 97 complete
-Training epoch 98 complete
-Training epoch 99 complete
