@@ -46,7 +46,7 @@ Deep Learning Coursework for software, systems and applications 3rd year module
 - ACAI implementation in tensorflow can be found [here](https://github.com/brain-research/acai)
 
 ## GANs
-How to train a GAN video facebook AI [here]](https://www.youtube.com/watch?time_continue=8&v=X1mUN6dD8uE&feature=emb_logo) video
+How to train a GAN video facebook AI [here](https://www.youtube.com/watch?time_continue=8&v=X1mUN6dD8uE&feature=emb_logo) video
 
 ### Training tips
 - [How to train a GAN Facebook AI](https://www.youtube.com/watch?time_continue=8&v=X1mUN6dD8uE&feature=emb_logo)
